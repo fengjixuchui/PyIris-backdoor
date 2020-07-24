@@ -4,8 +4,9 @@ It allows users to dynamically build, generate and encode/encrypt remote-access-
 control of other compromised hosts.
 
 # Why should you use this project?
-You should'nt lol, this was a passion project made purely for fun. It was never intended or designed to be used professionally in any 
-pen-testing or red teaming scenarios. Feel free to poke around with it to see what it can do.
+You shouldn't lol, this was a passion project made purely for fun. It was never intended or designed to be used professionally in any pen-testing or red teaming scenarios. Feel 
+free to poke around with it to see what it can do. However what it can offer (in an amateurish manner) is a strictly in memory backdoor framework that has a somewhat high 
+degree of flexibility and functionality.
 
 # Demo of PyIris in action on multiple operating systems (Windows and Linux)
 ## Dynamically generating a payload in Windows
@@ -40,6 +41,7 @@ scouts
 - request for admin/root
 - sleep for an arbitrary length of time before running (To bypass AV dynamic program analysis)
 - self delete (only works for scripts)
+- Stream webcam over TCP sockets (pretty laggy will work on a UDP version)
 
 # Features (Windows)
 - Acheive persistence through the windows registry (HKEY_CURRENT_USER)
@@ -49,7 +51,7 @@ scouts
 - Shutdown, restart, lock, logoff user gracefully without connection hanging from scout payload
 - Execute or open files remotely
 - Check the user idle time
-- Dump saved chrome passwords
+- Dump saved chrome passwords (wont work with the latest chrome browsers since they changed encryption methods and Im kinda lazy to update this lol)
 - Disbale/ Enable the targets keyboard/mouse
 - Bypass UAC through sdclt.exe (Has already been patched in recent windows updates)
 
@@ -94,10 +96,9 @@ Then install pyalsaaudio through apt-get, if you're installing on **ubuntu** ple
 
 ```sudo apt-get install python3-alsaaudio```
 
-**NOTE** : For some reason there exists no python3-alsaaudio package for ubuntu that can be installed through apt/apt-get ALTHOUGH the 
-python3-alsaaudio package can be installed just fine on kali linux. This means that on ubuntu PyIris will NOT run due to it being unable 
-to import alsaaudio in the 3rd party library import testing phase of its bootstrap. Installing from pypi fails as well. You need to 
-build the python3-alsaaudio package from source to get PyIris to work on Ubuntu it seems.
+After than install canberra-gtk-module for cv2 to use to display webcam live streams
+
+```sudo apt-get install libcanberra-gtk-module```
 
 Finally, install the rest of the required modules with pip. Only install modules from the ```setup/linux/requirements.txt``` file as
 this section is for running the Linux edition of PyIris.
@@ -124,8 +125,7 @@ On linux to install any newly added third party modules or update then run
 ### PyIris was successfully installed on the following operating systems
 - Windows 10
 - Kali Linux Rolling releases
-- Ubuntu 16.04 and future releases (TECHNICALLY supported, although python3-alsaaudio cannot be installed conventionally, see the note 
-above at the linux PyIris install section
+- Ubuntu
 - Debian
 
 # Basic Usage

