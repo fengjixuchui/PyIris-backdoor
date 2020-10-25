@@ -33,13 +33,15 @@ def main():
             print(config.pos + 'Loading and executing : ' + i)
             exec (i.replace('/', '_') + '.main("generate")')
         print(config.inf + 'Reading contents from temporary written file...')
-        with open(config.scout_values['Path'][0], 'r') as f:
+        with open(os.path.join(config.local_time_dir, 'payload.py'), 'r') as f:
             save_data = f.read()
         config.functions = list(set(config.functions))
         config.import_statements = list(set(config.import_statements))
         config.global_objs = list(set(config.global_objs))
         config.logics = list(set(config.logics))
-        with open(config.scout_values['Path'][0], 'w') as f:
+        # change dir into the "root/datetime" folder for payload generation
+        os.chdir(config.local_time_dir)
+        with open('payload.py', 'w') as f:
             print(config.inf + 'Writing in imports...')
             f.write(clean_import_data.main(config.import_statements) + '\n\n')
             print(config.inf + 'Writing in help menu...')
@@ -68,10 +70,8 @@ def main():
                 exec (i + '.main("encode")')
         if config.scout_values['Compile'][0] == 'True':
             print(config.inf + 'Compiling scout...')
-            compiler.main(config.scout_values['Path'][0])
-        print(config.pos + 'Successfully generated scout python file to : ' + os.path.join(os.getcwd(),
-                                                                                           config.scout_values['Path'][
-                                                                                               0]))
+            compiler.main()
+        print(config.pos + 'Successfully generated scout python file to : ' + os.path.join(os.getcwd(), 'payload.py'))
         config.functions = []
         config.import_statements = []
         config.global_objs = []
@@ -80,6 +80,7 @@ def main():
         config.startup_end = []
         config.startup_start = []
         config.help_menu = {}
+        # Bring us back to the original dir the user was in to not disrupt local operations
         os.chdir(original)
     except IOError:
         print(config.neg + 'File error (Is another process using a file of the same filepath?)')
